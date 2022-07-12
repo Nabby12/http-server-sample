@@ -7,7 +7,7 @@ on:
       - '.github/workflows/test-go.yml'
       - 'go/**'
       - '!**.md'
-    branches: [main]
+    branches: [develop]
 
 jobs:
   run-go-test:
