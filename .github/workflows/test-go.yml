@@ -1,0 +1,30 @@
+name: Run Go Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/test-go.yml'
+      - 'go/**'
+      - '!**.md'
+    branches: [develop]
+
+jobs:
+  run-go-test:
+    name: Run Go Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.18'
+
+      - name: Run test
+        working-directory: go
+        run: make test
