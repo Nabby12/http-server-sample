@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ .Title }}</title>
+</head>
+<body>
+    <h1>{{ .Header }}</h1>
+
+    現在日時: {{ .CurrentTime }}
+    <br>
+    Banner表示開始日時: {{ .StartTime }}
+    <br>
+    Banner表示終了日時: {{ .EndTime }}
+    <br>
+
+    {{ if .BannerFlag }}
+        <img src="/static/banner.png" alt="sample banner" height="200">
+        <br>
+    {{ end }}
+
+    <a href="/">index</a>
+</body>
+</html>

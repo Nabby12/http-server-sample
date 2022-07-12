@@ -1,0 +1,15 @@
+services:
+  app:
+    container_name: go-http-server-container
+    image: golang:1.18-alpine
+    working_dir: /go/src/app
+    entrypoint: go run ./main.go
+    env_file:
+      - ./env/.env
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - type: bind
+        source: ./app
+        target: /go/src/app
