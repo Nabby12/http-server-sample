@@ -20,6 +20,20 @@ make build
 # goテスト実行
 make test
 ```
+
+# ruby-http-server
+
+## ディレクトリ
+
+- ./ruby
+
+## 実行
+
+```shell
+# ローカル実行
+make run
+```
+
 # rust-http-server
 
 ## ディレクトリ
