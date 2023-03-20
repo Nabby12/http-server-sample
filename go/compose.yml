@@ -3,9 +3,7 @@ services:
     container_name: go-http-server-container
     image: golang:1.18-alpine
     working_dir: /go/src/app
-    entrypoint: go run ./main.go
-    env_file:
-      - ./env/.env
+    entrypoint: go run ./cmd/server/main.go
     ports:
       - 8080:8080
     restart: always
