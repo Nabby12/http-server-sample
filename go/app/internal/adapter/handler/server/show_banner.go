@@ -49,9 +49,13 @@ func (h *ShowBannerHandler) Handle(responseWriter http.ResponseWriter, r *http.R
 	}
 
 	if output := h.generateShowBannerPage.Execute(usecase.GenerateShowBannerPageInput{
-		ShowBannerPage: showBannerPage,
-		ClientIP:       clientIP,
-		ResponseWriter: responseWriter,
+		ShowBannerPage:  showBannerPage,
+		ResponseWriter:  responseWriter,
+		Location:        location,
+		ClientIP:        clientIP,
+		BannerStartTime: envValues.BannerCondition.StartTime,
+		BannerEndTime:   envValues.BannerCondition.EndTime,
+		BannerTargetIP:  envValues.BannerCondition.TagetIP,
 	}); output.Error != nil {
 		log.Fatal(output.Error)
 	}
