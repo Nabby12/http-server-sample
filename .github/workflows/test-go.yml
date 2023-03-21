@@ -25,6 +25,6 @@ jobs:
         with:
           go-version: "1.18"
 
-      # - name: Run test
-      #   working-directory: go
-      #   run: make test
+      - name: Run test
+        working-directory: go
+        run: make test

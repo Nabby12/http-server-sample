@@ -1,5 +1,23 @@
 package service
 
-type BannerCondition interface {
-	IsBannerDisplayed(currentTimeString string, clientIP string) (bool, error)
-}
+import (
+	"time"
+)
+
+type (
+	BannerCondition interface {
+		IsBannerDisplayed(input BannerConditionInput) *BannerConditionOutput
+	}
+	BannerConditionInput struct {
+		Location          *time.Location
+		CurrentTimeString string
+		ClientIP          string
+		BannerStartTime   string
+		BannerEndTime     string
+		BannerTargetIP    string
+	}
+	BannerConditionOutput struct {
+		Result bool
+		Err    error
+	}
+)

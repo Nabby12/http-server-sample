@@ -1,7 +1,6 @@
 package service
 
 import (
-	"go-http-server/internal/adapter/configuration"
 	"go-http-server/internal/domain/service"
 	"time"
 )
@@ -12,38 +11,47 @@ func NewBannerCondition() service.BannerCondition {
 	return &bannerConditionImpl{}
 }
 
-func (r *bannerConditionImpl) IsBannerDisplayed(currentTimeString string, clientIP string) (bool, error) {
-	envValues := configuration.LoadEnv()
-	location, err := time.LoadLocation(envValues.Location)
+func (r *bannerConditionImpl) IsBannerDisplayed(input service.BannerConditionInput) *service.BannerConditionOutput {
+	currentTime, err := time.ParseInLocation("2006/01/02 15:04:05.000", input.CurrentTimeString, input.Location)
 	if err != nil {
-		return false, err
+		return &service.BannerConditionOutput{
+			Result: false,
+			Err:    err,
+		}
+	}
+	startTime, err := time.ParseInLocation("2006/01/02 15:04:05.000", input.BannerStartTime, input.Location)
+	if err != nil {
+		return &service.BannerConditionOutput{
+			Result: false,
+			Err:    err,
+		}
+	}
+	endTime, err := time.ParseInLocation("2006/01/02 15:04:05.000", input.BannerEndTime, input.Location)
+	if err != nil {
+		return &service.BannerConditionOutput{
+			Result: false,
+			Err:    err,
+		}
 	}
 
-	currentTime, err := time.ParseInLocation("2006/01/02 15:04:05.000", currentTimeString, location)
-	if err != nil {
-		return false, err
-	}
-	startTime, err := time.ParseInLocation("2006/01/02 15:04:05.000", envValues.BannerCondition.StartTime, location)
-	if err != nil {
-		return false, err
-	}
-	endTime, err := time.ParseInLocation("2006/01/02 15:04:05.000", envValues.BannerCondition.EndTime, location)
-	if err != nil {
-		return false, err
-	}
-
-	bannerFlag := false
 	// startTime <= 現在時刻 <= endTime の場合バナー表示
 	if !startTime.After(currentTime) && !currentTime.After(endTime) {
-		bannerFlag = true
+		return &service.BannerConditionOutput{
+			Result: true,
+			Err:    nil,
+		}
 	}
-
-	targetIP := envValues.BannerCondition.TagetIP
 
 	// 「特定IPからのアクセス」かつ「現在時刻 <= endTime」時もバナー表示
-	if clientIP == targetIP && !currentTime.After(endTime) {
-		bannerFlag = true
+	if input.ClientIP == input.BannerTargetIP && !currentTime.After(endTime) {
+		return &service.BannerConditionOutput{
+			Result: true,
+			Err:    nil,
+		}
 	}
 
-	return bannerFlag, nil
+	return &service.BannerConditionOutput{
+		Result: false,
+		Err:    nil,
+	}
 }
