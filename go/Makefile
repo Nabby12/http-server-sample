@@ -13,8 +13,7 @@ build:
 		${IMAGE_NAME}
 
 test:
-	cd app && go test -v
-	cd app/interface/repository && go test -v
+	cd app && go test -v ./...
 
 remove:
 	docker stop ${CONTAINER_NAME}
