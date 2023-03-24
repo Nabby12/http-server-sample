@@ -1,20 +1,20 @@
 package server
 
 import (
-	"go-http-server/infrastructure/domain_impl/model"
 	"go-http-server/internal/adapter/configuration"
 	"go-http-server/internal/usecase"
 	"log"
 	"net/http"
+	"text/template"
 )
 
 type IndexHandler struct {
-	generateIndexPage usecase.GenerateIndexPage
+	getIndexPageData usecase.GetIndexPageData
 }
 
-func NewIndexHandler(generateIndexPage usecase.GenerateIndexPage) *IndexHandler {
+func NewIndexHandler(getIndexPageData usecase.GetIndexPageData) *IndexHandler {
 	return &IndexHandler{
-		generateIndexPage: generateIndexPage,
+		getIndexPageData: getIndexPageData,
 	}
 }
 
@@ -23,12 +23,20 @@ func (h *IndexHandler) Handle(responseWriter http.ResponseWriter, r *http.Reques
 	title := envValues.IndexPage.Title
 	header := envValues.IndexPage.Header
 
-	indexPage := model.NewIndexPage(title, header)
-
-	if output := h.generateIndexPage.Execute(usecase.GenerateIndexPageInput{
-		IndexPage:      indexPage,
-		ResponseWriter: responseWriter,
-	}); output.Error != nil {
+	output := h.getIndexPageData.Execute(usecase.GetIndexPageDataInput{
+		Title:  title,
+		Header: header,
+	})
+	if output.Error != nil {
 		log.Fatal(output.Error)
+	}
+
+	t, err := template.ParseFiles(output.Template)
+	if err != nil {
+		log.Fatalf("Failed Create template. due to an error: %v\n", err)
+	}
+
+	if err := t.Execute(responseWriter, output.PageData); err != nil {
+		log.Fatalf("Failed Execute template. due to an error: %v\n", err)
 	}
 }
