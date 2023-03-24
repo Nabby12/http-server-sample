@@ -9,15 +9,15 @@ import (
 	"net/http"
 )
 
-type indexPageImpl struct{}
+type indexPageRepositoryImpl struct{}
 
 func NewIndexPage() repository.IndexPage {
-	return &indexPageImpl{}
+	return &indexPageRepositoryImpl{}
 }
 
 const indexHtml string = "index.html"
 
-func (r *indexPageImpl) SetView(indexPage model.IndexPage, responseWriter http.ResponseWriter) error {
+func (r *indexPageRepositoryImpl) SetView(indexPage model.IndexPage, responseWriter http.ResponseWriter) error {
 	envValues := configuration.LoadEnv()
 	t, err := template.ParseFiles(fmt.Sprintf("%v/%v", envValues.PublicPath, indexHtml))
 	if err != nil {

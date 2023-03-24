@@ -9,15 +9,15 @@ import (
 	"net/http"
 )
 
-type showBannerPageImpl struct{}
+type showBannerPageRepositoryImpl struct{}
 
 func NewShowBannerPage() repository.ShowBannerPage {
-	return &showBannerPageImpl{}
+	return &showBannerPageRepositoryImpl{}
 }
 
 const showBannerHtml string = "showbanner.html"
 
-func (r *showBannerPageImpl) SetView(showBannerPage model.ShowBannerPage, responseWriter http.ResponseWriter) error {
+func (r *showBannerPageRepositoryImpl) SetView(showBannerPage model.ShowBannerPage, responseWriter http.ResponseWriter) error {
 	envValues := configuration.LoadEnv()
 	t, err := template.ParseFiles(fmt.Sprintf("%v/%v", envValues.PublicPath, showBannerHtml))
 	if err != nil {
