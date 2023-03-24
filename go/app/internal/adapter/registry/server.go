@@ -13,8 +13,8 @@ type ServerRegistry struct {
 }
 
 func Initialize() *ServerRegistry {
-	indexRepository := repository.NewIndexPage()
-	generateIndexPage := usecase.NewGenerateIndexPage(indexRepository)
+	htmlRepository := repository.NewHtmlTemplate()
+	generateIndexPage := usecase.NewGetIndexPageData(htmlRepository)
 	showBannerRepository := repository.NewShowBannerPage()
 	bannerConditionService := service.NewBannerCondition()
 	generateShowBannerPage := usecase.NewGenerateShowBannerPage(showBannerRepository, bannerConditionService)
