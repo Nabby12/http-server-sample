@@ -52,7 +52,3 @@ func (sbp *showBannerPage) EndTime() string {
 func (sbp *showBannerPage) BannerFlag() bool {
 	return sbp.bannerFlag
 }
-
-func (sbp *showBannerPage) UpdateBannerFlag(flag bool) {
-	sbp.bannerFlag = flag
-}
