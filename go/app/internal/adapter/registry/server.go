@@ -14,12 +14,11 @@ type ServerRegistry struct {
 
 func Initialize() *ServerRegistry {
 	htmlRepository := repository.NewHtmlTemplate()
-	generateIndexPage := usecase.NewGetIndexPageData(htmlRepository)
-	showBannerRepository := repository.NewShowBannerPage()
+	getIndexPageData := usecase.NewGetIndexPageData(htmlRepository)
 	bannerConditionService := service.NewBannerCondition()
-	generateShowBannerPage := usecase.NewGenerateShowBannerPage(showBannerRepository, bannerConditionService)
+	getShowBannerPageData := usecase.NewGetShowBannerPageData(htmlRepository, bannerConditionService)
 	return &ServerRegistry{
-		IndexHandler:      server.NewIndexHandler(generateIndexPage),
-		ShowBannerHandler: server.NewShowBannerHandler(generateShowBannerPage),
+		IndexHandler:      server.NewIndexHandler(getIndexPageData),
+		ShowBannerHandler: server.NewShowBannerHandler(getShowBannerPageData),
 	}
 }
