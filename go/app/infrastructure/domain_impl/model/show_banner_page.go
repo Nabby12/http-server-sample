@@ -1,6 +1,8 @@
 package model
 
-import "go-http-server/internal/domain/model"
+import (
+	"go-http-server/internal/domain/model"
+)
 
 type showBannerPage struct {
 	title       string
