@@ -23,10 +23,11 @@ func (h *IndexHandler) Handle(responseWriter http.ResponseWriter, r *http.Reques
 	title := envValues.IndexPage.Title
 	header := envValues.IndexPage.Header
 
-	output := h.getIndexPageData.Execute(usecase.GetIndexPageDataInput{
+	input := usecase.GetIndexPageDataInput{
 		Title:  title,
 		Header: header,
-	})
+	}
+	output := h.getIndexPageData.Execute(input)
 	if output.Error != nil {
 		log.Fatal(output.Error)
 	}
