@@ -1,22 +1,22 @@
 package server
 
 import (
-	"go-http-server/infrastructure/domain_impl/model"
 	"go-http-server/internal/adapter/configuration"
 	"go-http-server/internal/usecase"
 	"log"
 	"net/http"
 	"strings"
+	"text/template"
 	"time"
 )
 
 type ShowBannerHandler struct {
-	generateShowBannerPage usecase.GenerateShowBannerPage
+	getShowBannerPageData usecase.GetShowBannerPageData
 }
 
-func NewShowBannerHandler(generateShowBannerPage usecase.GenerateShowBannerPage) *ShowBannerHandler {
+func NewShowBannerHandler(getShowBannerPageData usecase.GetShowBannerPageData) *ShowBannerHandler {
 	return &ShowBannerHandler{
-		generateShowBannerPage: generateShowBannerPage,
+		getShowBannerPageData: getShowBannerPageData,
 	}
 }
 
@@ -33,9 +33,7 @@ func (h *ShowBannerHandler) Handle(responseWriter http.ResponseWriter, r *http.R
 	currentTime := currentTimeString
 	startTime := envValues.BannerCondition.StartTime
 	endTime := envValues.BannerCondition.EndTime
-	bannerFlag := false
-
-	showBannerPage := model.NewShowBannerPage(title, header, currentTime, startTime, endTime, bannerFlag)
+	targetIP := envValues.BannerCondition.TagetIP
 
 	var clientIP string
 	forwarded := r.Header.Get("X-FORWARDED-FOR")
@@ -48,15 +46,28 @@ func (h *ShowBannerHandler) Handle(responseWriter http.ResponseWriter, r *http.R
 		clientIP = strings.Split(clientIP, ":")[0]
 	}
 
-	if output := h.generateShowBannerPage.Execute(usecase.GenerateShowBannerPageInput{
-		ShowBannerPage:  showBannerPage,
-		ResponseWriter:  responseWriter,
-		Location:        location,
-		ClientIP:        clientIP,
-		BannerStartTime: envValues.BannerCondition.StartTime,
-		BannerEndTime:   envValues.BannerCondition.EndTime,
-		BannerTargetIP:  envValues.BannerCondition.TagetIP,
-	}); output.Error != nil {
+	input := usecase.GetShowBannerPageDataInput{
+		Title:       title,
+		Header:      header,
+		CurrentTime: currentTime,
+		StartTime:   startTime,
+		EndTime:     endTime,
+		Location:    location,
+		ClientIP:    clientIP,
+		TargetIP:    targetIP,
+	}
+
+	output := h.getShowBannerPageData.Execute(input)
+	if output.Error != nil {
 		log.Fatal(output.Error)
+	}
+
+	t, err := template.ParseFiles(output.Template)
+	if err != nil {
+		log.Fatalf("Failed Create template. due to an error: %v\n", err)
+	}
+
+	if err := t.Execute(responseWriter, output.PageData); err != nil {
+		log.Fatalf("Failed Execute template. due to an error: %v\n", err)
 	}
 }

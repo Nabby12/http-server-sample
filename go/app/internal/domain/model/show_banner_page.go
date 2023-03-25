@@ -7,5 +7,4 @@ type ShowBannerPage interface {
 	StartTime() string
 	EndTime() string
 	BannerFlag() bool
-	UpdateBannerFlag(flag bool)
 }

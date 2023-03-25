@@ -1,6 +1,8 @@
 package model
 
-import "go-http-server/internal/domain/model"
+import (
+	"go-http-server/internal/domain/model"
+)
 
 type showBannerPage struct {
 	title       string
@@ -51,8 +53,4 @@ func (sbp *showBannerPage) EndTime() string {
 
 func (sbp *showBannerPage) BannerFlag() bool {
 	return sbp.bannerFlag
-}
-
-func (sbp *showBannerPage) UpdateBannerFlag(flag bool) {
-	sbp.bannerFlag = flag
 }

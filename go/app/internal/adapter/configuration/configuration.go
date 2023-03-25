@@ -43,7 +43,7 @@ func SetEnv() {
 		BannerCondition: BannerCondition{
 			TagetIP:   "xx.xx.xx.xx",
 			StartTime: "1900/01/01 00:00:00.000",
-			EndTime:   "2025/01/01 00:00:00.000",
+			EndTime:   "2099/01/01 00:00:00.000",
 		},
 	}
 }
