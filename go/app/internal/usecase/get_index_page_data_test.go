@@ -31,9 +31,8 @@ func Test_GetIndexPageData_Execute(t *testing.T) {
 
 	type (
 		input struct {
-			title     string
-			header    string
-			repoInput string
+			title  string
+			header string
 		}
 		mock struct {
 			repoOutput model.HtmlTemplate
@@ -69,9 +68,8 @@ func Test_GetIndexPageData_Execute(t *testing.T) {
 		{
 			name: "success: no error",
 			input: input{
-				title:     dummyTitle,
-				header:    dummyHeader,
-				repoInput: dummyKey,
+				title:  dummyTitle,
+				header: dummyHeader,
 			},
 			mock: mock{
 				repoOutput: dummyHtmlPage,
@@ -91,9 +89,8 @@ func Test_GetIndexPageData_Execute(t *testing.T) {
 		{
 			name: "failure: repository error and return error",
 			input: input{
-				title:     dummyTitle,
-				header:    dummyHeader,
-				repoInput: dummyKey,
+				title:  dummyTitle,
+				header: dummyHeader,
 			},
 			mock: mock{
 				repoOutput: nil,

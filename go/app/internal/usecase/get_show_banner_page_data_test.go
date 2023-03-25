@@ -72,16 +72,14 @@ func Test_GetShowBannerPage_Execute(t *testing.T) {
 
 	type (
 		input struct {
-			title        string
-			header       string
-			currentTime  string
-			startTime    string
-			endTime      string
-			location     *time.Location
-			clientIP     string
-			targetIP     string
-			serviceInput service.BannerConditionInput
-			repoInput    string
+			title       string
+			header      string
+			currentTime string
+			startTime   string
+			endTime     string
+			location    *time.Location
+			clientIP    string
+			targetIP    string
 		}
 		mock struct {
 			serviceOutput service.BannerConditionOutput
@@ -131,16 +129,14 @@ func Test_GetShowBannerPage_Execute(t *testing.T) {
 		{
 			name: "success: no error with bannerFlag true",
 			input: input{
-				title:        dummyTitle,
-				header:       dummyHeader,
-				currentTime:  dummyTimeStringYear2000,
-				startTime:    dummyTimeStringYear1950,
-				endTime:      dummyTimeStringYear2050,
-				location:     dummyLocation,
-				clientIP:     dummyClientIP,
-				targetIP:     dummyTargetIP,
-				serviceInput: dummyBannerConditionInput,
-				repoInput:    dummyKey,
+				title:       dummyTitle,
+				header:      dummyHeader,
+				currentTime: dummyTimeStringYear2000,
+				startTime:   dummyTimeStringYear1950,
+				endTime:     dummyTimeStringYear2050,
+				location:    dummyLocation,
+				clientIP:    dummyClientIP,
+				targetIP:    dummyTargetIP,
 			},
 			mock: mock{
 				serviceOutput: dummyBannerConditionOutputWithTrue,
@@ -164,16 +160,14 @@ func Test_GetShowBannerPage_Execute(t *testing.T) {
 		{
 			name: "success: no error with bannerFlag false",
 			input: input{
-				title:        dummyTitle,
-				header:       dummyHeader,
-				currentTime:  dummyTimeStringYear2000,
-				startTime:    dummyTimeStringYear1950,
-				endTime:      dummyTimeStringYear2050,
-				location:     dummyLocation,
-				clientIP:     dummyClientIP,
-				targetIP:     dummyTargetIP,
-				serviceInput: dummyBannerConditionInput,
-				repoInput:    dummyKey,
+				title:       dummyTitle,
+				header:      dummyHeader,
+				currentTime: dummyTimeStringYear2000,
+				startTime:   dummyTimeStringYear1950,
+				endTime:     dummyTimeStringYear2050,
+				location:    dummyLocation,
+				clientIP:    dummyClientIP,
+				targetIP:    dummyTargetIP,
 			},
 			mock: mock{
 				serviceOutput: dummyBannerConditionOutputWithFalse,
@@ -197,16 +191,14 @@ func Test_GetShowBannerPage_Execute(t *testing.T) {
 		{
 			name: "failure: repository error and return error",
 			input: input{
-				title:        dummyTitle,
-				header:       dummyHeader,
-				currentTime:  dummyTimeStringYear2000,
-				startTime:    dummyTimeStringYear1950,
-				endTime:      dummyTimeStringYear2050,
-				location:     dummyLocation,
-				clientIP:     dummyClientIP,
-				targetIP:     dummyTargetIP,
-				serviceInput: dummyBannerConditionInput,
-				repoInput:    dummyKey,
+				title:       dummyTitle,
+				header:      dummyHeader,
+				currentTime: dummyTimeStringYear2000,
+				startTime:   dummyTimeStringYear1950,
+				endTime:     dummyTimeStringYear2050,
+				location:    dummyLocation,
+				clientIP:    dummyClientIP,
+				targetIP:    dummyTargetIP,
 			},
 			mock: mock{
 				serviceOutput: dummyBannerConditionOutputWithTrue,
@@ -230,16 +222,14 @@ func Test_GetShowBannerPage_Execute(t *testing.T) {
 		{
 			name: "failure: service error and return error",
 			input: input{
-				title:        dummyTitle,
-				header:       dummyHeader,
-				currentTime:  dummyTimeStringYear2000,
-				startTime:    dummyTimeStringYear1950,
-				endTime:      dummyTimeStringYear2050,
-				location:     dummyLocation,
-				clientIP:     dummyClientIP,
-				targetIP:     dummyTargetIP,
-				serviceInput: dummyBannerConditionInput,
-				repoInput:    dummyKey,
+				title:       dummyTitle,
+				header:      dummyHeader,
+				currentTime: dummyTimeStringYear2000,
+				startTime:   dummyTimeStringYear1950,
+				endTime:     dummyTimeStringYear2050,
+				location:    dummyLocation,
+				clientIP:    dummyClientIP,
+				targetIP:    dummyTargetIP,
 			},
 			mock: mock{
 				serviceOutput: dummyBannerConditionOutputWithError,
