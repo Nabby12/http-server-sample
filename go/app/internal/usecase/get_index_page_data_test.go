@@ -130,14 +130,14 @@ func Test_GetIndexPageData_Execute(t *testing.T) {
 				t.Fatal("failed: repository call output is invalid")
 			}
 
-			if err := assertOutput(output, tt.want.output); err != nil {
+			if err := assertGetIndexPageDataOutput(output, tt.want.output); err != nil {
 				t.Fatal(err.Error())
 			}
 		})
 	}
 }
 
-func assertOutput(got *GetIndexPageDataOutput, want GetIndexPageDataOutput) error {
+func assertGetIndexPageDataOutput(got *GetIndexPageDataOutput, want GetIndexPageDataOutput) error {
 	if got.PageData != nil {
 		if got.PageData.Title() != want.PageData.Title() ||
 			got.PageData.Header() != want.PageData.Header() ||
